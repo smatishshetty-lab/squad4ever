@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SQUAD4EVER IPL 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Orbitron:wght@700;900&family=Inter:wght@400;500;600&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#0a0e1a;color:#e8eaf6;font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden}
+  .bg-field{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse 80% 50% at 50% 110%,#0d3b1e 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 20% 80%,#0a2540 0%,transparent 50%),radial-gradient(ellipse 60% 40% at 80% 80%,#1a0a3b 0%,transparent 50%),#060912;overflow:hidden}
+  .bg-field::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(255,255,255,0.015) 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(255,255,255,0.015) 40px)}
+  .pitch-oval{position:absolute;bottom:-60px;left:50%;transform:translateX(-50%);width:700px;height:340px;border:2px solid rgba(255,220,100,0.1);border-radius:50%;box-shadow:0 0 60px rgba(255,200,50,0.08),inset 0 0 80px rgba(30,100,30,0.15)}
+  .pitch-center{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);width:100px;height:22px;background:rgba(200,170,100,0.12);border:1px solid rgba(200,170,100,0.2);border-radius:4px}
+  .stars{position:absolute;inset:0}
+  .star{position:absolute;border-radius:50%;background:#fff;animation:twinkle 3s infinite}
+  @keyframes twinkle{0%,100%{opacity:.2}50%{opacity:.8}}
+  header{position:relative;z-index:10;text-align:center;padding:32px 20px 16px}
+  .trophy-icon{font-size:36px;filter:drop-shadow(0 0 12px gold);margin-bottom:6px}
+  .title{font-family:'Orbitron',sans-serif;font-size:clamp(22px,5vw,42px);font-weight:900;background:linear-gradient(135deg,#ffd700,#ff8c00,#ffd700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:2px;filter:drop-shadow(0 0 20px rgba(255,200,0,0.4))}
+  .subtitle{font-family:'Rajdhani',sans-serif;font-size:14px;color:rgba(255,220,100,0.6);letter-spacing:4px;margin-top:4px}
+  .prize-bar{display:flex;justify-content:center;gap:16px;margin-top:12px;flex-wrap:wrap}
+  .prize-chip{background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.3);border-radius:20px;padding:4px 14px;font-size:12px;font-family:'Rajdhani',sans-serif;font-weight:600;color:#ffd700;letter-spacing:1px}
+  nav{position:relative;z-index:10;display:flex;justify-content:center;gap:8px;padding:12px 20px;flex-wrap:wrap}
+  .nav-btn{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);color:rgba(200,210,255,0.7);padding:8px 20px;border-radius:6px;font-family:'Rajdhani',sans-serif;font-weight:600;font-size:14px;letter-spacing:1px;cursor:pointer;transition:all .2s}
+  .nav-btn:hover{background:rgba(255,215,0,0.1);border-color:rgba(255,215,0,0.4);color:#ffd700}
+  .nav-btn.active{background:rgba(255,215,0,0.15);border-color:#ffd700;color:#ffd700}
+  main{position:relative;z-index:10;padding:0 16px 60px;max-width:1200px;margin:0 auto}
+  .tab{display:none}.tab.active{display:block}
+  .section-title{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:rgba(255,215,0,0.7);letter-spacing:3px;text-align:center;margin:24px 0 16px}
+  .lb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:28px}
+  .lb-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:16px;text-align:center;transition:transform .2s,border-color .2s}
+  .lb-card:hover{transform:translateY(-2px);border-color:rgba(255,215,0,0.3)}
+  .lb-card.rank-1{border-color:rgba(255,215,0,0.5);background:rgba(255,215,0,0.07)}
+  .lb-card.rank-2{border-color:rgba(192,192,192,0.4);background:rgba(192,192,192,0.05)}
+  .lb-card.rank-3{border-color:rgba(205,127,50,0.4);background:rgba(205,127,50,0.05)}
+  .lb-rank{font-size:24px;margin-bottom:4px}
+  .lb-name{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:20px;letter-spacing:1px}
+  .lb-score{font-family:'Orbitron',sans-serif;font-size:26px;font-weight:700;color:#4fc;margin:4px 0}
+  .lb-label{font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:1px}
+  .lb-players{font-size:11px;color:rgba(255,255,255,0.5);margin-top:6px;line-height:1.5}
+  .squads-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+  .squad-card{background:rgba(10,20,40,0.7);border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden}
+  .squad-header{padding:10px 14px;display:flex;justify-content:space-between;align-items:center}
+  .squad-owner{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:17px;letter-spacing:1px}
+  .squad-total{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;background:rgba(0,0,0,0.3);border-radius:6px;padding:3px 8px}
+  .player-row{display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-top:1px solid rgba(255,255,255,0.04);font-size:13px;transition:background .15s}
+  .player-row:hover{background:rgba(255,255,255,0.04)}
+  .player-row.counting{background:rgba(100,255,150,0.06)}
+  .p-name{flex:1;color:rgba(230,235,255,0.85)}
+  .p-runs{font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;min-width:44px;text-align:right}
+  .p-rank-badge{font-size:10px;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-left:6px;font-weight:700;flex-shrink:0}
+  .badge-in{background:rgba(80,255,120,0.2);color:#4fc}
+  .badge-out{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.3)}
+  .match-controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px;margin-bottom:18px}
+  .match-controls input,.match-controls select{background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.15);color:#e8eaf6;border-radius:6px;padding:7px 12px;font-size:13px;font-family:'Inter',sans-serif;outline:none}
+  .match-controls input{flex:1;min-width:160px}
+  .btn{background:rgba(255,215,0,0.12);border:1px solid rgba(255,215,0,0.4);color:#ffd700;padding:7px 18px;border-radius:6px;font-size:13px;font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px;cursor:pointer;transition:all .2s;white-space:nowrap}
+  .btn:hover{background:rgba(255,215,0,0.22);border-color:#ffd700}
+  .btn:disabled{opacity:0.4;cursor:not-allowed}
+  .btn.danger{background:rgba(255,60,60,0.1);border-color:rgba(255,80,80,0.4);color:#ff6b6b}
+  .btn.danger:hover{background:rgba(255,60,60,0.2)}
+  .match-list{display:flex;flex-direction:column;gap:10px}
+  .match-block{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;overflow:hidden}
+  .match-block-header{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:rgba(255,255,255,0.04);cursor:pointer}
+  .match-title{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:15px;letter-spacing:1px}
+  .match-date{font-size:11px;color:rgba(255,255,255,0.4)}
+  .match-body{padding:12px 14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
+  .score-entry{display:flex;align-items:center;gap:8px}
+  .score-entry label{font-size:12px;color:rgba(255,255,255,0.5);flex:1}
+  .score-entry input{width:70px;background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.12);color:#e8eaf6;border-radius:5px;padding:4px 8px;font-size:13px;font-family:'Orbitron',sans-serif;text-align:center;outline:none}
+  .score-entry input:focus{border-color:rgba(255,215,0,0.5)}
+  .match-actions{padding:0 14px 12px;display:flex;gap:8px}
+  .prize-section{max-width:500px;margin:0 auto}
+  .prize-card{background:rgba(255,215,0,0.05);border:1px solid rgba(255,215,0,0.2);border-radius:12px;padding:20px;margin-bottom:14px;text-align:center}
+  .prize-rank{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;color:rgba(255,215,0,0.6);letter-spacing:3px;margin-bottom:6px}
+  .prize-amount{font-family:'Orbitron',sans-serif;font-size:32px;font-weight:700;color:#ffd700;margin-bottom:4px}
+  .prize-holder{font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:600;color:rgba(255,255,255,0.8)}
+  .prize-pool-info{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+  .info-box{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:12px;text-align:center}
+  .info-val{font-family:'Orbitron',sans-serif;font-size:18px;font-weight:700;color:#4fc}
+  .info-lbl{font-size:11px;color:rgba(255,255,255,0.4);margin-top:4px;letter-spacing:1px}
+  .sync-bar{position:relative;z-index:10;display:flex;justify-content:center;align-items:center;gap:10px;padding:6px 20px;font-size:12px;font-family:'Rajdhani',sans-serif;letter-spacing:1px}
+  .sync-dot{width:8px;height:8px;border-radius:50%;background:#4fc;animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+  .sync-dot.error{background:#ff6b6b;animation:none}
+  .sync-dot.loading{background:#ffd700}
+  #toast{position:fixed;bottom:24px;right:24px;z-index:999;background:rgba(30,50,30,0.95);border:1px solid rgba(80,255,120,0.4);color:#4fc;border-radius:8px;padding:10px 18px;font-size:13px;font-family:'Rajdhani',sans-serif;font-weight:600;letter-spacing:1px;transform:translateY(60px);opacity:0;transition:all .3s;pointer-events:none}
+  #toast.show{transform:translateY(0);opacity:1}
+  #toast.error{background:rgba(50,20,20,0.95);border-color:rgba(255,80,80,0.4);color:#ff6b6b}
+  .empty-state{text-align:center;padding:40px;color:rgba(255,255,255,0.25);font-size:14px}
+  .collapse-toggle{font-size:11px;color:rgba(255,255,255,0.3)}
+  .owner-colors{--c0:#ff6b6b;--c1:#4fc;--c2:#ffd700;--c3:#a78bfa;--c4:#f97316}
+  .col-0{color:var(--c0)}.col-1{color:var(--c1)}.col-2{color:var(--c2)}.col-3{color:var(--c3)}.col-4{color:var(--c4)}
+  .bg-0{background:rgba(255,107,107,0.15)}.bg-1{background:rgba(68,255,204,0.1)}.bg-2{background:rgba(255,215,0,0.1)}.bg-3{background:rgba(167,139,250,0.1)}.bg-4{background:rgba(249,115,22,0.1)}
+  .border-0{border-color:rgba(255,107,107,0.3)}.border-1{border-color:rgba(68,255,204,0.3)}.border-2{border-color:rgba(255,215,0,0.3)}.border-3{border-color:rgba(167,139,250,0.3)}.border-4{border-color:rgba(249,115,22,0.3)}
+  ::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,215,0,0.2);border-radius:3px}
+</style>
+</head>
+<body class="owner-colors">
+
+<div class="bg-field">
+  <div class="pitch-oval"></div>
+  <div class="pitch-center"></div>
+  <div class="stars" id="stars"></div>
+</div>
+
+<header>
+  <div class="trophy-icon">🏆</div>
+  <div class="title">SQUAD4EVER</div>
+  <div class="subtitle">IPL 2026 · FANTASY CRICKET CONTEST</div>
+  <div class="prize-bar">
+    <span class="prize-chip">5 OWNERS · 9 PLAYERS EACH</span>
+    <span class="prize-chip">BEST 6 SCORE</span>
+    <span class="prize-chip">POOL: ₹1,00,000</span>
+    <span class="prize-chip">1ST: ₹60,000 · 2ND: ₹40,000</span>
+  </div>
+</header>
+
+<div class="sync-bar">
+  <div class="sync-dot loading" id="sync-dot"></div>
+  <span id="sync-label" style="color:rgba(255,255,255,0.4)">CONNECTING TO LIVE DATABASE...</span>
+</div>
+
+<nav>
+  <button class="nav-btn active" onclick="showTab('leaderboard')">🏅 LEADERBOARD</button>
+  <button class="nav-btn" onclick="showTab('squads')">👥 SQUADS</button>
+  <button class="nav-btn" onclick="showTab('matches')">🏏 MATCH SCORES</button>
+  <button class="nav-btn" onclick="showTab('prize')">💰 PRIZE</button>
+</nav>
+
+<main>
+  <div id="tab-leaderboard" class="tab active">
+    <div class="section-title">STANDINGS</div>
+    <div class="lb-grid" id="lb-grid"><div class="empty-state">Loading...</div></div>
+    <div class="section-title">BEST 6 BREAKDOWN</div>
+    <div class="squads-grid" id="lb-squads"></div>
+  </div>
+
+  <div id="tab-squads" class="tab">
+    <div class="section-title">ALL SQUADS · TOTAL RUNS</div>
+    <div class="squads-grid" id="all-squads"></div>
+  </div>
+
+  <div id="tab-matches" class="tab">
+    <div class="section-title">ENTER MATCH SCORES</div>
+    <div class="match-controls">
+      <input id="match-name" placeholder="Match name (e.g. MI vs CSK · Match 1)">
+      <input id="match-date" type="date">
+      <button class="btn" id="add-match-btn" onclick="addMatch()">+ ADD MATCH</button>
+    </div>
+    <div id="match-list" class="match-list"><div class="empty-state">Loading...</div></div>
+  </div>
+
+  <div id="tab-prize" class="tab">
+    <div class="section-title">PRIZE DISTRIBUTION</div>
+    <div class="prize-section">
+      <div class="prize-pool-info">
+        <div class="info-box"><div class="info-val">₹20,000</div><div class="info-lbl">ENTRY / PERSON</div></div>
+        <div class="info-box"><div class="info-val">₹1,00,000</div><div class="info-lbl">TOTAL POOL</div></div>
+      </div>
+      <div class="prize-card" style="border-color:rgba(255,215,0,0.5)">
+        <div class="prize-rank">🥇 1ST PRIZE</div>
+        <div class="prize-amount">₹60,000</div>
+        <div class="prize-holder" id="prize-1st">Loading...</div>
+      </div>
+      <div class="prize-card" style="border-color:rgba(192,192,192,0.4)">
+        <div class="prize-rank">🥈 2ND PRIZE</div>
+        <div class="prize-amount">₹40,000</div>
+        <div class="prize-holder" id="prize-2nd">Loading...</div>
+      </div>
+      <div style="text-align:center;margin-top:20px">
+        <div style="font-size:12px;color:rgba(255,255,255,0.3);line-height:1.8;font-family:Rajdhani,sans-serif;letter-spacing:1px">
+          SCORING RULE: Best 6 out of 9 players' total runs count<br>
+          Data source: Cricbuzz / ESPNcricinfo · Enter after each match<br>
+          All amounts in Indian Rupees (INR)
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="toast"></div>
+
+<script>
+const API_KEY = '$2a$10$Dmst8k.e6.eX5zdUgmrkV.hyoP4x214b5U0.tiuXkMVHaemYVC/j6';
+const BIN_NAME = 'squad4ever-ipl2026';
+let BIN_ID = null;
+
+const OWNERS = ['Smatish','Mohit','Gawade','Farzi','Hitu'];
+const PLAYERS = [
+  ['Virat Kohli','Jos Buttler','Ruturaj Gaikwad','Sai Sudharsan','Sunil Narine','Priyansh Arya','Riyan Parag','Shivam Dube','Heinrich Klassen'],
+  ['Abhishek Sharma','Shubman Gill','Quinton de Kock','Rajat Patidar','Mitchell Marsh','Finn Allen','Shimron Hetmyer','Josh Inglis','Hardik Pandya'],
+  ['Ishan Kishan','Travis Head','Suryakumar Yadav','Ayush Mhatre','Philip Salt','Nicholas Pooran','Ajinkya Rahane','Sherfane Rutherford','Tim David'],
+  ['Rohit Sharma','Sanju Samson','KL Rahul','Yashasvi Jaiswal','Aiden Markram','Prabhsimran Singh','Rishabh Pant','Devdutt Padikkal','Tim Seifert'],
+  ['Shreyas Iyer','Vaibhav Sooryavanshi','Jacob Bethell','Tilak Varma','David Miller','Dewald Brevis','Ryan Rickelton','Tristan Stubbs','Jitesh Sharma']
+];
+
+let state = {runs:{}, matches:[]};
+let activeTab = 'leaderboard';
+
+function defaultState(){
+  const runs = {};
+  OWNERS.forEach((_,oi)=>PLAYERS[oi].forEach(p=>{ runs[p]=0; }));
+  return {runs, matches:[]};
+}
+
+function setSyncStatus(status, msg){
+  const dot = document.getElementById('sync-dot');
+  const lbl = document.getElementById('sync-label');
+  dot.className = 'sync-dot' + (status==='ok'?' ':status==='error'?' error':' loading');
+  lbl.textContent = msg;
+  lbl.style.color = status==='ok'?'rgba(68,255,204,0.6)':status==='error'?'rgba(255,107,107,0.7)':'rgba(255,215,0,0.6)';
+}
+
+async function findOrCreateBin(){
+  // Try to find existing bin by listing bins
+  try{
+    const r = await fetch('https://api.jsonbin.io/v3/b?name='+BIN_NAME, {
+      headers:{'X-Master-Key':API_KEY,'X-Bin-Name':BIN_NAME}
+    });
+  }catch(e){}
+
+  // Search bins
+  try{
+    const r = await fetch('https://api.jsonbin.io/v3/b', {
+      headers:{'X-Master-Key':API_KEY}
+    });
+    if(r.ok){
+      const data = await r.json();
+      // look for our bin
+      if(Array.isArray(data)){
+        const found = data.find(b=>b.record && b.record.name===BIN_NAME);
+        if(found){ BIN_ID = found.record.id||found.id||found._id; return true; }
+        // try alternative structure
+        const found2 = data.find(b=>(b.name||'')===BIN_NAME||(b._id&&b.name===BIN_NAME));
+        if(found2){ BIN_ID = found2._id||found2.id; return true; }
+      }
+    }
+  }catch(e){}
+
+  // Check localStorage for saved bin ID
+  const saved = localStorage.getItem('squad4ever_bin_id');
+  if(saved){ BIN_ID = saved; return true; }
+
+  // Create new bin
+  try{
+    const r = await fetch('https://api.jsonbin.io/v3/b', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','X-Master-Key':API_KEY,'X-Bin-Name':BIN_NAME,'X-Bin-Private':'false'},
+      body: JSON.stringify(defaultState())
+    });
+    if(r.ok){
+      const data = await r.json();
+      BIN_ID = data.metadata?.id || data.metadata?.binId;
+      if(BIN_ID){
+        localStorage.setItem('squad4ever_bin_id', BIN_ID);
+        return true;
+      }
+    }
+  }catch(e){}
+  return false;
+}
+
+async function loadFromCloud(){
+  setSyncStatus('loading','CONNECTING...');
+  const ok = await findOrCreateBin();
+  if(!ok){ setSyncStatus('error','DATABASE ERROR — CHECK API KEY'); showToast('Connection failed','error'); return; }
+
+  try{
+    const r = await fetch('https://api.jsonbin.io/v3/b/'+BIN_ID+'/latest',{
+      headers:{'X-Master-Key':API_KEY}
+    });
+    if(r.ok){
+      const data = await r.json();
+      state = data.record || defaultState();
+      if(!state.runs) state.runs = defaultState().runs;
+      if(!state.matches) state.matches = [];
+      setSyncStatus('ok','LIVE · LAST SYNCED '+ new Date().toLocaleTimeString());
+      renderCurrentTab();
+    } else {
+      setSyncStatus('error','LOAD FAILED');
+    }
+  }catch(e){
+    setSyncStatus('error','NETWORK ERROR');
+  }
+}
+
+async function saveToCloud(){
+  if(!BIN_ID){ showToast('No database connection','error'); return false; }
+  setSyncStatus('loading','SAVING...');
+  try{
+    const r = await fetch('https://api.jsonbin.io/v3/b/'+BIN_ID,{
+      method:'PUT',
+      headers:{'Content-Type':'application/json','X-Master-Key':API_KEY},
+      body: JSON.stringify(state)
+    });
+    if(r.ok){
+      setSyncStatus('ok','LIVE · SAVED '+ new Date().toLocaleTimeString());
+      showToast('SCORES SAVED & LIVE');
+      return true;
+    } else {
+      setSyncStatus('error','SAVE FAILED');
+      showToast('Save failed — try again','error');
+      return false;
+    }
+  }catch(e){
+    setSyncStatus('error','NETWORK ERROR');
+    showToast('Network error','error');
+    return false;
+  }
+}
+
+function showToast(msg, type=''){
+  const t = document.getElementById('toast');
+  t.textContent = (type==='error'?'✗ ':'✓ ') + msg;
+  t.className = 'show' + (type==='error'?' error':'');
+  setTimeout(()=>t.className='',2500);
+}
+
+function showTab(tab){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  event.currentTarget.classList.add('active');
+  activeTab = tab;
+  renderCurrentTab();
+  // Auto-refresh from cloud on tab switch
+  if(BIN_ID) loadFromCloud();
+}
+
+function renderCurrentTab(){
+  if(activeTab==='leaderboard') renderLeaderboard();
+  else if(activeTab==='squads') renderSquads();
+  else if(activeTab==='matches') renderMatches();
+  else if(activeTab==='prize') renderPrize();
+}
+
+const rankEmoji = ['🥇','🥈','🥉','4️⃣','5️⃣'];
+
+function getBest6Score(oi){
+  return PLAYERS[oi].map(p=>state.runs[p]||0).sort((a,b)=>b-a).slice(0,6).reduce((a,b)=>a+b,0);
+}
+
+function getTotalRuns(oi){
+  return PLAYERS[oi].map(p=>state.runs[p]||0).reduce((a,b)=>a+b,0);
+}
+
+function getRanked(){
+  return OWNERS.map((o,i)=>({name:o,idx:i,score:getBest6Score(i),total:getTotalRuns(i)})).sort((a,b)=>b.score-a.score);
+}
+
+function renderLeaderboard(){
+  const ranked = getRanked();
+  document.getElementById('lb-grid').innerHTML = ranked.map((o,ri)=>`
+    <div class="lb-card rank-${ri+1} bg-${o.idx} border-${o.idx}">
+      <div class="lb-rank">${rankEmoji[ri]}</div>
+      <div class="lb-name col-${o.idx}">${o.name}</div>
+      <div class="lb-score">${o.score}</div>
+      <div class="lb-label">BEST 6 RUNS</div>
+      <div class="lb-players">Total all 9: ${o.total}</div>
+    </div>`).join('');
+  document.getElementById('lb-squads').innerHTML = ranked.map(o=>squadCardHTML(o.idx,true)).join('');
+}
+
+function renderSquads(){
+  document.getElementById('all-squads').innerHTML = OWNERS.map((_,i)=>squadCardHTML(i,false)).join('');
+}
+
+function squadCardHTML(oi, highlight){
+  const rows = PLAYERS[oi].map(p=>({name:p,runs:state.runs[p]||0})).sort((a,b)=>b.runs-a.runs);
+  const best6names = rows.slice(0,6).map(r=>r.name);
+  const score = highlight ? rows.slice(0,6).reduce((s,r)=>s+r.runs,0) : rows.reduce((s,r)=>s+r.runs,0);
+  return `<div class="squad-card border-${oi}">
+    <div class="squad-header bg-${oi}">
+      <span class="squad-owner col-${oi}">${OWNERS[oi]}</span>
+      <span class="squad-total col-${oi}">${score}${highlight?' pts':' runs'}</span>
+    </div>
+    ${rows.map(r=>{
+      const cnt = best6names.includes(r.name);
+      return `<div class="player-row ${cnt&&highlight?'counting':''}">
+        <span class="p-name">${r.name}</span>
+        <span class="p-runs col-${oi}">${r.runs}</span>
+        ${highlight?`<span class="p-rank-badge ${cnt?'badge-in':'badge-out'}">${cnt?'✓':'✗'}</span>`:''}
+      </div>`;
+    }).join('')}
+  </div>`;
+}
+
+function renderMatches(){
+  const list = document.getElementById('match-list');
+  if(!state.matches.length){ list.innerHTML='<div class="empty-state">No matches yet. Add a match above to enter scores.</div>'; return; }
+  list.innerHTML = state.matches.map((m,mi)=>{
+    const inputs = OWNERS.flatMap((_,oi)=>PLAYERS[oi].map(p=>`
+      <div class="score-entry">
+        <label><span class="col-${oi}" style="font-size:10px">${OWNERS[oi].substring(0,3)}</span> ${p}</label>
+        <input type="number" min="0" value="${m.scores[p]??''}" placeholder="0"
+          onchange="updateScore(${mi},'${p.replace(/'/g,"\\'")}',this.value)">
+      </div>`)).join('');
+    return `<div class="match-block">
+      <div class="match-block-header" onclick="toggleMatch(${mi})">
+        <div>
+          <div class="match-title">🏏 ${m.name}</div>
+          <div class="match-date">${m.date||''}</div>
+        </div>
+        <span class="collapse-toggle" id="tog-${mi}">▼ EXPAND</span>
+      </div>
+      <div id="mb-${mi}" style="display:none">
+        <div class="match-body">${inputs}</div>
+        <div class="match-actions">
+          <button class="btn" onclick="saveMatchScores(${mi})">💾 SAVE & SYNC</button>
+          <button class="btn danger" onclick="deleteMatch(${mi})">🗑 DELETE</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleMatch(mi){
+  const b=document.getElementById('mb-'+mi), t=document.getElementById('tog-'+mi);
+  const open=b.style.display==='block';
+  b.style.display=open?'none':'block';
+  t.textContent=open?'▼ EXPAND':'▲ COLLAPSE';
+}
+
+async function addMatch(){
+  const name=document.getElementById('match-name').value.trim();
+  if(!name){alert('Enter a match name');return;}
+  const date=document.getElementById('match-date').value;
+  const btn=document.getElementById('add-match-btn');
+  btn.disabled=true;btn.textContent='SAVING...';
+  state.matches.unshift({name,date,scores:{}});
+  recalcTotals();
+  const ok = await saveToCloud();
+  btn.disabled=false;btn.textContent='+ ADD MATCH';
+  if(ok){ document.getElementById('match-name').value=''; document.getElementById('match-date').value=''; renderMatches(); }
+  else { state.matches.shift(); renderMatches(); }
+}
+
+function updateScore(mi,player,val){
+  state.matches[mi].scores[player]=parseInt(val)||0;
+}
+
+async function saveMatchScores(mi){
+  recalcTotals();
+  await saveToCloud();
+  renderLeaderboard();
+}
+
+async function deleteMatch(mi){
+  if(!confirm('Delete this match and its scores?'))return;
+  state.matches.splice(mi,1);
+  recalcTotals();
+  await saveToCloud();
+  renderMatches();
+}
+
+function recalcTotals(){
+  const t={};
+  OWNERS.forEach((_,oi)=>PLAYERS[oi].forEach(p=>{t[p]=0;}));
+  state.matches.forEach(m=>Object.entries(m.scores).forEach(([p,r])=>{if(t[p]!==undefined)t[p]+=(parseInt(r)||0);}));
+  state.runs=t;
+}
+
+function renderPrize(){
+  const r=getRanked();
+  document.getElementById('prize-1st').textContent=r[0]?r[0].name+' ('+r[0].score+' pts)':'TBD';
+  document.getElementById('prize-2nd').textContent=r[1]?r[1].name+' ('+r[1].score+' pts)':'TBD';
+}
+
+// Stars
+(()=>{
+  const s=document.getElementById('stars');
+  for(let i=0;i<80;i++){
+    const d=document.createElement('div');d.className='star';
+    const sz=Math.random()*2+1;
+    d.style.cssText=`width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;animation-delay:${Math.random()*3}s;animation-duration:${2+Math.random()*3}s`;
+    s.appendChild(d);
+  }
+})();
+
+// Auto refresh every 60 seconds
+setInterval(()=>{ if(BIN_ID) loadFromCloud(); }, 60000);
+
+// Init
+loadFromCloud();
+</script>
+</body>
+</html>
